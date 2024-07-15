@@ -7,7 +7,7 @@ class VendingMachine
     @stock = []
     5.times do
       @stock << Drink.new('pepsi', 150)
-      @stock << Drink.new('monster', 250)
+      @stock << Drink.new('monster', 230)
       @stock << Drink.new('irohasu', 120)
     end
   end
