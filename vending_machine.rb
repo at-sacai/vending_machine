@@ -3,7 +3,7 @@ class VendingMachine
 
   def initialize
     @sales = 0
-    @price = { 'pepsi' => 150, 'monster' => 250, 'irohasu' => 120 }
+    @price = { 'pepsi' => 150, 'monster' => 230, 'irohasu' => 120 }
     @stock = []
     5.times do
       @stock << Drink.new('pepsi', 150)
