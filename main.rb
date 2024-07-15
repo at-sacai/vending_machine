@@ -6,12 +6,7 @@ suica = Suica.new
 puts suica.charge(1000)
 
 v_machine = VendingMachine.new
-v_machine.buy(suica, 'pepsi')
-v_machine.buy(suica, 'pepsi')
-v_machine.buy(suica, 'pepsi')
-v_machine.buy(suica, 'pepsi')
-v_machine.buy(suica, 'pepsi')
-v_machine.buy(suica, 'pepsi')
+6.times { v_machine.buy(suica, 'pepsi') }
 v_machine.buy(suica, 'monster')
 v_machine.buy(suica, 'irohasu')
 puts v_machine.show_stock
