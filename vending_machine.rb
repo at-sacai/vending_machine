@@ -4,30 +4,29 @@ class VendingMachine
   def initialize
     @sales = 0
     @price = { 'pepsi' => 150, 'monster' => 250, 'irohasu' => 120 }
-    @stock = { 'pepsi' => [], 'monster' => [], 'irohasu' => [] }
-
+    @stock = []
     5.times do
-      @stock['pepsi'] << Drink.new('pepsi', 150)
-      @stock['monster'] << Drink.new('monster', 250)
-      @stock['irohasu'] << Drink.new('irohasu', 120)
+      @stock << Drink.new('pepsi', 150)
+      @stock << Drink.new('monster', 250)
+      @stock << Drink.new('irohasu', 120)
     end
   end
 
   def show_stock
-    puts "pepsiの在庫は#{@stock['pepsi'].size}個です"
-    puts "monsterの在庫は#{@stock['monster'].size}個です"
-    puts "irohasuの在庫は#{@stock['irohasu'].size}個です"
+    puts "pepsiの在庫は、#{@stock.count { |stock| stock.name == 'pepsi' }}個です"
+    puts "monsterの在庫は、#{@stock.count { |stock| stock.name == 'monster' }}個です"
+    puts "irohasuの在庫は、#{@stock.count { |stock| stock.name == 'irohasu' }}個です"
   end
 
   def add_stock(drink)
-    @stock[drink.name] << drink
+    @stock << drink
   end
 
   def buy(suica, drink)
-    if @stock[drink].size > 0
+    if @stock.count { |stock| stock.name == drink }.positive?
       if suica.deposit >= @price[drink]
         @sales += @price[drink]
-        @stock[drink].shift
+        @stock.delete_at(@stock.find_index { |stock| stock.name == drink })
         suica.pay(@price[drink])
       else
         puts 'チャージ残高が足りません'
