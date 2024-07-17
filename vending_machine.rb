@@ -3,7 +3,6 @@ class VendingMachine
 
   def initialize
     @sales = 0
-    @price = { 'pepsi' => 150, 'monster' => 230, 'irohasu' => 120 }
     @stock = []
     5.times do
       @stock << Drink.new('pepsi', 150)
@@ -23,16 +22,19 @@ class VendingMachine
   end
 
   def buy(suica, drink)
-    if @stock.count { |stock| stock.name == drink }.positive?
-      if suica.deposit >= @price[drink]
-        @sales += @price[drink]
-        @stock.delete_at(@stock.find_index { |stock| stock.name == drink })
-        suica.pay(@price[drink])
-      else
-        puts 'チャージ残高が足りません'
-      end
-    else
+    selected_drink = @stock.find { |stock| stock.name == drink }
+    unless selected_drink
       puts "#{drink}の在庫がありません"
+      return
     end
+
+    if suica.deposit < selected_drink.price
+      puts 'チャージ残高が足りません'
+      return
+    end
+
+    @sales += selected_drink.price
+    @stock.delete_at(@stock.find_index { |stock| stock.name == drink })
+    suica.pay(selected_drink.price)
   end
 end
